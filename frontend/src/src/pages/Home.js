@@ -1,30 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function App() {
+function Home() {
 
   const [properties, setProperties] = useState([]);
+
+  const token = localStorage.getItem("access");
   const navigate = useNavigate();
-
-  const getToken = () => localStorage.getItem("access");
-
-  // =========================
-  // PROTECCIÓN DE RUTA
-  // =========================
-  useEffect(() => {
-    const token = getToken();
-
-    if (!token) {
-      navigate("/login");
-    }
-  }, []);
 
   // =========================
   // LOAD PROPERTIES
   // =========================
-  const loadProperties = () => {
-    const token = getToken();
 
+  const loadProperties = () => {
     fetch('http://127.0.0.1:8000/api/properties/', {
       headers: {
         Authorization: `Bearer ${token}`
@@ -47,39 +35,18 @@ function App() {
       <div style={{
         padding: 20,
         background: 'white',
-        borderBottom: '1px solid #eee',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        borderBottom: '1px solid #eee'
       }}>
-        <h2 style={{ margin: 0 }}>Inmobiliaria Pro</h2>
-
-        <button
-          onClick={() => {
-            localStorage.removeItem("access");
-            navigate("/login");
-          }}
-          style={{
-            padding: 8,
-            background: 'black',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            borderRadius: 6
-          }}
-        >
-          Salir
-        </button>
+        <h2 style={{ margin: 0 }}>Dashboard Inmobiliaria</h2>
       </div>
 
-      {/* CONTENT */}
+      {/* GRID */}
       <div style={{
         padding: 20,
         maxWidth: 1200,
         margin: '0 auto'
       }}>
 
-        {/* GRID */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -101,6 +68,7 @@ function App() {
 
               {/* IMAGE */}
               <div style={{ height: 200, overflow: 'hidden' }}>
+
                 {p.image ? (
                   <img
                     src={`http://127.0.0.1:8000${p.image}`}
@@ -123,32 +91,27 @@ function App() {
                     Sin imagen
                   </div>
                 )}
+
               </div>
 
               {/* INFO */}
               <div style={{ padding: 15 }}>
-                <h3 style={{ margin: 0, fontSize: 18 }}>
+
+                <h3 style={{ margin: 0 }}>
                   {p.title}
                 </h3>
 
-                <p style={{ margin: 0, color: '#777', fontSize: 14 }}>
-                  {p.city || "Ciudad no definida"}
+                <p style={{ color: '#777', margin: 0 }}>
+                  {p.city || "Sin ciudad"}
                 </p>
 
                 <p style={{
                   marginTop: 10,
-                  fontWeight: 'bold',
-                  fontSize: 18
+                  fontWeight: 'bold'
                 }}>
                   ${p.price}
                 </p>
 
-                <p style={{
-                  fontSize: 13,
-                  color: '#555'
-                }}>
-                  {p.description}
-                </p>
               </div>
 
             </div>
@@ -161,4 +124,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
