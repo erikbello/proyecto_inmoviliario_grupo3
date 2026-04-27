@@ -1,13 +1,16 @@
-# Entorno virtual de Python
+# Python
 venv/
-env/
-
-# Librerías de React (La razón del bucle)
-frontend/node_modules/
-node_modules/
-
-# Archivos temporales y DB
 __pycache__/
 *.pyc
 db.sqlite3
+
+# Node
+node_modules/
+build/
+
+# Env
 .env
+
+# OS
+.DS_Store
+Thumbs.db
