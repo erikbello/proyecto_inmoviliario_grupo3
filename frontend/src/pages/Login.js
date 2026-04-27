@@ -19,10 +19,10 @@ export default function Login() {
     .then(res => res.json())
     .then(data => {
       if (data.access) {
-        // 🔐 guardar token
+        //  guardar token
         localStorage.setItem("access", data.access);
 
-        // 👉 redirigir al home
+        //  redirigir al home
         window.location.href = "/";
       } else {
         alert("Credenciales incorrectas");
